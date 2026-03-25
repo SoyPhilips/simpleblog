@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blog - Proyecto de Software</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Mi Blog Simple</h1>
+    </header>
+
+    <main>
+        <section id="form-section">
+            <h2>Crear Nueva Publicación</h2>
+            <form id="blog-form">
+                <input type="hidden" id="post-id">
+                <div class="form-group">
+                    <label for="title">Título:</label>
+                    <input type="text" id="title" required placeholder="Ingresa el título...">
+                </div>
+                <div class="form-group">
+                    <label for="content">Contenido:</label>
+                    <textarea id="content" required placeholder="Escribe aquí el contenido..."></textarea>
+                </div>
+                <button type="submit" id="submit-btn">Publicar</button>
+                <button type="button" id="cancel-btn" style="display: none;">Cancelar</button>
+            </form>
+        </section>
+
+        <section id="posts-section">
+            <h2>Publicaciones Recientes</h2>
+            <div id="posts-container">
+                <!-- Las publicaciones se cargarán aquí con JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Equipo de Ingeniería de Software</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
