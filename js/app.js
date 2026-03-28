@@ -14,7 +14,7 @@ function savePosts(posts){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
 }
 
-// Render
+// Render ('renderizar' o 'mostrar en pantalla')
 function renderPosts(){
   const list = $('postsList');
   const posts = loadPosts().sort((a,b)=> b.createdAt.localeCompare(a.createdAt));
@@ -66,7 +66,7 @@ function renderPosts(){
   });
 }
 
-// CRUD
+// CRUD (crear, leer, actualizar, eliminar)
 function createPost(title, content){
   const posts = loadPosts();
   const post = {
@@ -101,7 +101,7 @@ function deletePost(id){
   renderPosts();
 }
 
-// Edit flow
+// Edit flow (flujo de edicion)
 function startEdit(id){
   const posts = loadPosts();
   const post = posts.find(p => p.id === id);
@@ -118,7 +118,7 @@ function resetForm(){
   $('content').value = '';
 }
 
-// Form handling
+// Form handling (manejo de formularios)
 document.addEventListener('DOMContentLoaded', () => {
   renderPosts();
 
