@@ -15,9 +15,24 @@ function savePosts(posts){
 }
 
 // Render ('renderizar' o 'mostrar en pantalla')
+// Render
+function updateStats(posts) {
+  const total = $('totalPosts');
+  const last = $('lastActivity');
+  if (total) total.textContent = posts.length;
+  if (last && posts.length > 0) {
+    const latest = posts.reduce((a, b) => (a.updatedAt || a.createdAt) > (b.updatedAt || b.createdAt) ? a : b);
+    const date = latest.updatedAt || latest.createdAt;
+    last.textContent = new Date(date).toLocaleDateString();
+  } else if (last) {
+    last.textContent = 'Sin actividad';
+  }
+}
+
 function renderPosts(){
   const list = $('postsList');
   const posts = loadPosts().sort((a,b)=> b.createdAt.localeCompare(a.createdAt));
+  updateStats(posts);
   list.innerHTML = '';
   if(posts.length === 0){
     list.innerHTML = '<div class="empty">No hay publicaciones aún.</div>';
