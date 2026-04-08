@@ -31,52 +31,63 @@ function updateStats(posts) {
 
 function renderPosts(){
   const list = $('postsList');
-  const posts = loadPosts().sort((a,b)=> b.createdAt.localeCompare(a.createdAt));
+  const posts = loadPosts().sort((a,b)=> (b.updatedAt || b.createdAt).localeCompare(a.updatedAt || a.createdAt));
   updateStats(posts);
   list.innerHTML = '';
+  
   if(posts.length === 0){
-    list.innerHTML = '<div class="empty">No hay publicaciones aún.</div>';
+    list.innerHTML = '<div class="empty">No hay publicaciones aún. ¡Sé el primero en escribir algo!</div>';
     return;
   }
+  
   posts.forEach(post => {
     const card = document.createElement('div');
     card.className = 'post-card';
     card.dataset.id = post.id;
 
-    const left = document.createElement('div');
-    left.style.flex = '1';
+    const header = document.createElement('div');
+    header.className = 'post-header';
 
     const title = document.createElement('h3');
+    title.className = 'post-title';
     title.textContent = post.title;
-    left.appendChild(title);
+    header.appendChild(title);
+    card.appendChild(header);
+
+    const content = document.createElement('div');
+    content.className = 'post-content';
+    content.textContent = post.content;
+    card.appendChild(content);
+
+    const footer = document.createElement('div');
+    footer.className = 'post-footer';
 
     const meta = document.createElement('div');
     meta.className = 'post-meta';
-    meta.textContent = `Creado: ${new Date(post.createdAt).toLocaleString()}${post.updatedAt ? ' · Editado: ' + new Date(post.updatedAt).toLocaleString() : ''}`;
-    left.appendChild(meta);
-
-    const content = document.createElement('p');
-    content.textContent = post.content;
-    left.appendChild(content);
+    const date = post.updatedAt || post.createdAt;
+    meta.textContent = `${post.updatedAt ? 'Editado' : 'Publicado'} el ${new Date(date).toLocaleString()}`;
+    footer.appendChild(meta);
 
     const actions = document.createElement('div');
     actions.className = 'post-actions';
 
     const editBtn = document.createElement('button');
     editBtn.className = 'btn-edit';
-    editBtn.textContent = 'Editar';
+    editBtn.innerHTML = '✎';
+    editBtn.title = 'Editar';
     editBtn.onclick = () => startEdit(post.id);
 
     const delBtn = document.createElement('button');
     delBtn.className = 'btn-delete';
-    delBtn.textContent = 'Eliminar';
+    delBtn.innerHTML = '🗑';
+    delBtn.title = 'Eliminar';
     delBtn.onclick = () => deletePost(post.id);
 
     actions.appendChild(editBtn);
     actions.appendChild(delBtn);
+    footer.appendChild(actions);
 
-    card.appendChild(left);
-    card.appendChild(actions);
+    card.appendChild(footer);
     list.appendChild(card);
   });
 }
